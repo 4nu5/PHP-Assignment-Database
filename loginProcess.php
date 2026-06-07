@@ -4,9 +4,6 @@ require 'connect.php';
 
 if($_SERVER["REQUEST_METHOD"] == "POST"){
 
-    // echo "Raw POST Data received from form: <br>";
-    // var_dump($_POST);
-    // die();
     $username = trim($_POST['username']);
     $password = trim($_POST['password']);
 
@@ -16,20 +13,15 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
             $stmt -> execute(['username' => $username]);
             $user = $stmt -> fetch(PDO::FETCH_ASSOC);
 
-// --- TEMPORARY DEBUGGING BLOCK ---
-// echo "Typing this password: " . $password . "<br>";
-// echo "Database returned this array: <br>";
-// echo "Username: " . $username . "<br>"; 
-// print_r($user);
-// die(); // Kills the script so you can read the output
-
             if($user && password_verify($password,$user['passwordHash'])){
                 $_SESSION['user_id'] = $user['id'];
                 $_SESSION['username'] = $user['username'];
                 $_SESSION['role'] = $user['role'];
+                $_SESSION['latitude'] = $user['latitude'];
+                $_SESSION['longitude'] = $user['longitude'];
 
                 echo "login successfull";
-                header("Location: dashboard.php");
+                header("Location: dashboardtest.php");
                 exit();
             }else{
                 echo "Invalid Authorization";
