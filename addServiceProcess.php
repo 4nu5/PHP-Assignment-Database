@@ -10,11 +10,11 @@ error_reporting(E_ALL);
 ini_set('display_errors', 1);
 require 'connect.php';
 
-echo "<h3>Checking the Session Vault:</h3>";
-echo "<pre>";
-print_r($_SESSION);
-echo "</pre>";
-die();
+// echo "<h3>Checking the Session Vault:</h3>";
+// echo "<pre>";
+// print_r($_SESSION);
+// echo "</pre>";
+// die();
 
 if($_SERVER["REQUEST_METHOD"] == "POST"){
 
