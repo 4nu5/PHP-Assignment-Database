@@ -31,18 +31,15 @@ CREATE TABLE participation_Requests(
     FOREIGN KEY (service_id) REFERENCES Community_services(Service_id)
     ON UPDATE CASCADE ON DELETE CASCADE
     ); 
-    latitude
-    longitude
-    home_address
 
 alter table users
-add column latitude DECIMAL(10,8) NULL;
-add column longitude DEC    IMAL(11,8) NULL;
+add column latitude DECIMAL(10,8) NULL,
+add column longitude DECIMAL(11,8) NULL,
 add column home_address VARCHAR(90) NULL;
 
 alter table Community_services
-add column latitude DECIMAL(10,8) NULL;
-add column longitude DECIMAL(11,8) NULL;
+add column latitude DECIMAL(10,8) NULL,
+add column longitude DECIMAL(11,8) NULL,
 add column home_address VARCHAR(90) NULL;
 
 
