@@ -39,9 +39,18 @@ if (!isset($_SESSION['username'])) {
             
             <label for="description">Description:</label>
             <textarea id="description" name="description" rows="4" required placeholder="What will volunteers be doing?"></textarea>
+
+            <label for="sdgTarget">SDG Target:</label>
+            <input type="text" name="sdgTarget" id="sdgTarget" required placeholder="E.g., SDG 1:">
+
+            <label for="eventDate">Event Date:</label>
+            <input type="date" name="eventDate" id="eventDate"><br><br>
             
             <label for="service_address">Location Address:</label>
-            <input type="text" id="service_address" name="service_address" required placeholder="E.g., Jalan SS15/4">
+            <div style="display: flex; gap: 10px; margin-bottom: 5px;">
+                 <input type="text" id="service_address" name="service_address" required placeholder="E.g., Jalan SS15/4">
+                 <button type="button" id="findbtn" style="width: auto;height: 55px; background-color: #0056b3; margin: 0;">Find On Map</button>
+            </div>
             
             <label>Pinpoint Location on Map:</label>
             <small style="display:block; margin-bottom: 10px; color: #666;">Click the map exactly where the event is happening.</small>
@@ -74,7 +83,13 @@ if (!isset($_SESSION['username'])) {
             // Send coords to the hidden inputs
             document.getElementById('latitude').value = e.latlng.lat;
             document.getElementById('longitude').value = e.latlng.lng;
+            document.getElementById('map-status').innerText="Pin Dropped Manually";
+            document.getElementById('map-status').style.color="Green";
         });
+        document.getElementById('findbtn').addEventListener('click', function(){
+            var address = document.getElementById('service_address').value;
+            var statusText= document.getElementById
+        }
     </script>
 
 </body>
