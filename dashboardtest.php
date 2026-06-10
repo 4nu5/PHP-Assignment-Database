@@ -30,7 +30,8 @@ if (!empty($_SESSION['latitude']) && !empty($_SESSION['longitude'])) {
         .navbar h2 { margin: 0; }
         .btn-logout { background-color: #dc3545; color: white; padding: 8px 15px; text-decoration: none; border-radius: 5px; font-weight: bold; }
         .btn-logout:hover { background-color: #c82333; }
-        
+        .btn-addservice { background-color: #35dc6f; color: white; padding: 8px 15px; text-decoration: none; border-radius: 5px; font-weight: bold; }
+        .btn-addservice:hover { background-color: #2389c8; }
         .main-container { max-width: 900px; margin: 40px auto; background: white; padding: 30px; border-radius: 10px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); }
         
         .warning-box { background-color: #fff3cd; color: #856404; padding: 20px; border-radius: 8px; border-left: 5px solid #ffeeba; margin-top: 20px; }
@@ -48,6 +49,7 @@ if (!empty($_SESSION['latitude']) && !empty($_SESSION['longitude'])) {
 
     <div class="navbar">
         <h2>CommunityConnect</h2>
+        <a href="addService.php" class="btn-addservice">Add Service</a>
         <a href="login.php" class="btn-logout">Logout</a>
     </div>
 
@@ -61,6 +63,7 @@ if (!empty($_SESSION['latitude']) && !empty($_SESSION['longitude'])) {
                 <br><br>
                 <a href="#">Update Profile Location</a>
             </div>
+            
         <?php else: ?>
             <div class="services-list">
                 <h3>📍 Community Services Within 5KM</h3>

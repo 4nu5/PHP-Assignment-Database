@@ -30,8 +30,9 @@
             <label for="password">Password</label>
             <input type="password" id="password" name="password" required autocomplete="current-password">
         </div>
-
-        <button type="submit">Authenticate</button>
+       
+        <button type="submit">LOGIN</button><br><br>
+         <a href="register.php">Click to Register</a>
     </form>
 </div>
 

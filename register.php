@@ -41,7 +41,7 @@
                <button type="submit">Register Account</button>
     </form>
             <script>
-                var map = L.map('map').setView([3.0731, 101.6077], 4);
+                var map = L.map('map').setView([3.0731, 101.6077], 14);
                 L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png',{
                     maxZoom: 19,
                     attribution:'&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'

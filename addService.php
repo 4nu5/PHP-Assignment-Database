@@ -1,6 +1,6 @@
 <?php
 session_start();
-// Security: Kick them out if they aren't logged in
+
 if (!isset($_SESSION['username'])) {
     header("Location: login.php");
     exit();
@@ -39,10 +39,19 @@ if (!isset($_SESSION['username'])) {
             
             <label for="description">Description:</label>
             <textarea id="description" name="description" rows="4" required placeholder="What will volunteers be doing?"></textarea>
+
+            <label for="sdgTarget">SDG Target:</label>
+            <input type="text" name="sdgTarget" id="sdgTarget" required placeholder="E.g., SDG 1:">
+
+            <label for="eventDate">Event Date:</label>
+            <input type="date" name="eventDate" id="eventDate"><br><br>
             
             <label for="service_address">Location Address:</label>
-            <input type="text" id="service_address" name="service_address" required placeholder="E.g., Jalan SS15/4">
-            
+            <div style="display: flex; gap: 10px; margin-bottom: 5px;">
+                 <input type="text" id="service_address" name="service_address" required placeholder="E.g., Jalan SS15/4">
+                 <button type="button" id="findbtn" style="width: auto;height: 55px; background-color: #0056b3; margin: 0;">Find On Map</button>
+            </div>
+            <small id="map-status" style="display:block; margin-bottom: 20px; font-weight: bold;"></small>
             <label>Pinpoint Location on Map:</label>
             <small style="display:block; margin-bottom: 10px; color: #666;">Click the map exactly where the event is happening.</small>
             
@@ -56,11 +65,11 @@ if (!isset($_SESSION['username'])) {
     </div>
 
     <script>
-        // Centered roughly on Sunway/Subang
+        
         var map = L.map('map').setView([3.0731, 101.6077], 14);
         
-        L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png',{
-            attribution:'&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+        L.tileLayer('http://tile.openstreetmap.org/{z}/{x}/{y}.png',{
+            attribution:'&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
         }).addTo(map);
 
         var marker;
@@ -74,6 +83,50 @@ if (!isset($_SESSION['username'])) {
             // Send coords to the hidden inputs
             document.getElementById('latitude').value = e.latlng.lat;
             document.getElementById('longitude').value = e.latlng.lng;
+            document.getElementById('map-status').innerText="Pin Dropped Manually";
+            document.getElementById('map-status').style.color="Green";
+        });
+        document.getElementById('findbtn').addEventListener('click', function(){
+            var address = document.getElementById('service_address').value;
+            var statusText= document.getElementById('map-status');
+
+            if(address.trim() == ''){
+                statusText.innerText= "Please Enter an Address";
+                statusText.style.color = "red";
+            }
+            var url = 'http://nominatim.openstreetmap.org/search?format=json&q=' + encodeURIComponent(address);
+            fetch(url)
+            .then(response => response.json())
+            .then(data => {
+                if(data.length > 0){
+                    var lat = data[0].lat;
+                    var lng = data[0].lng;
+
+                    map.setView([lat,lng],16);
+
+                    if(marker){
+                        marker.setLatLng([lat,lng]);
+                    }else{
+                        marker = L.marker([lat,lng]).addTo(map);
+                    }
+
+                    document.getElementById('latitude').value = lat;
+                    document.getElementById('longitude').value = lng;
+
+                    statusText.innerText = "Address found";
+                    statusText.style.color = "green";
+                }else{
+                     statusText.innerText = "Address not found";
+                    statusText.style.color = "red";
+
+                    document.getElementById('latitude').value = '';
+                    document.getElementById('longitude').value = '';
+                }
+            })
+            .catch(error => {
+                statusText.innerText = "Network Error";
+                statusText.style.color = "red";
+            });
         });
     </script>
 
