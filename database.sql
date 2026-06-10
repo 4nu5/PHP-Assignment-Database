@@ -40,7 +40,7 @@ add column home_address VARCHAR(90) NULL;
 alter table Community_services
 add column latitude DECIMAL(10,8) NULL,
 add column longitude DECIMAL(11,8) NULL,
-add column home_address VARCHAR(90) NULL;
+add column service_address VARCHAR(90) NULL;
 
 
 INSERT INTO community_services (title, description, sdgTarget, eventDate, createdby, service_address, latitude, longitude) VALUES
