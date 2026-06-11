@@ -86,21 +86,37 @@ if (!isset($_SESSION['username'])) {
             document.getElementById('map-status').innerText="Pin Dropped Manually";
             document.getElementById('map-status').style.color="Green";
         });
-        document.getElementById('findbtn').addEventListener('click', function(){
+            document.getElementById('service_address').addEventListener('keypress',function(){
+                if(event.key === 'Enter'){
+                    event.preventDefault();
+                    document.getElementById('findbtn').click();
+                }
+            });
+
+            document.getElementById('findbtn').addEventListener('click', function(){
             var address = document.getElementById('service_address').value;
             var statusText= document.getElementById('map-status');
 
-            if(address.trim() == ''){
+            if(address.trim() === ''){
                 statusText.innerText= "Please Enter an Address";
                 statusText.style.color = "red";
+                return;
             }
+            statusText.innerText = "🔍 Searching OpenStreetMap...";
+              statusText.style.color = "#09b300";
+
             var url = 'http://nominatim.openstreetmap.org/search?format=json&q=' + encodeURIComponent(address);
             fetch(url)
-            .then(response => response.json())
-            .then(data => {
+            .then(Response => {
+                if(!Response.ok){
+                    throw new Error("HTTP Status" + Response.status);
+                }
+                return Response.json();
+            })
+                .then(data => {
                 if(data.length > 0){
                     var lat = data[0].lat;
-                    var lng = data[0].lng;
+                    var lng = data[0].lon;
 
                     map.setView([lat,lng],16);
 
@@ -124,7 +140,7 @@ if (!isset($_SESSION['username'])) {
                 }
             })
             .catch(error => {
-                statusText.innerText = "Network Error";
+                statusText.innerText = "Network Error: " + error.message;
                 statusText.style.color = "red";
             });
         });
