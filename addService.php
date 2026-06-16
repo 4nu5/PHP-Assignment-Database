@@ -86,7 +86,7 @@ if (!isset($_SESSION['username'])) {
             document.getElementById('map-status').innerText="Pin Dropped Manually";
             document.getElementById('map-status').style.color="Green";
         });
-            document.getElementById('service_address').addEventListener('keypress',function(){
+            document.getElementById('service_address').addEventListener('keypress',function(event){
                 if(event.key === 'Enter'){
                     event.preventDefault();
                     document.getElementById('findbtn').click();
@@ -104,8 +104,8 @@ if (!isset($_SESSION['username'])) {
             }
             statusText.innerText = "🔍 Searching OpenStreetMap...";
               statusText.style.color = "#09b300";
-
-            var url = 'http://nominatim.openstreetmap.org/search?format=json&q=' + encodeURIComponent(address);
+            if(address.trim() !== ''){
+            var url = "geolocator.php?address=" + encodeURIComponent(address);
             fetch(url)
             .then(Response => {
                 if(!Response.ok){
@@ -143,7 +143,8 @@ if (!isset($_SESSION['username'])) {
                 statusText.innerText = "Network Error: " + error.message;
                 statusText.style.color = "red";
             });
-        });
+        }
+});
     </script>
 
 </body>
