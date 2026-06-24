@@ -59,8 +59,8 @@
                         marker = L.marker(e.latlng).addTo(map);
                     }
 
-                    document.getElementById('latitude').value = lat;
-                    document.getElementById('longitude').value = lng;
+                    document.getElementById('latitude').value = e.latlng.lat;
+                    document.getElementById('longitude').value = e.latlng.lng;
                     document.getElementById('map-status').innerText = "Pin Dropped Manually";
                     document.getElementById('map-status').style.color = "Green";
                 });

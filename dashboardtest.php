@@ -43,6 +43,11 @@ if (!empty($_SESSION['latitude']) && !empty($_SESSION['longitude'])) {
         .service-title { margin: 0 0 10px 0; font-size: 1.2em; color: #0056b3; }
         .service-distance { background: #e9ecef; padding: 3px 8px; border-radius: 12px; font-size: 0.8em; color: #495057; float: right; }
         .service-address { color: #6c757d; font-size: 0.9em; margin-top: 10px; }
+        
+        .status-badge { padding: 4px 8px; border-radius: 4px; font-weight: bold; font-size: 0.85em; float: right; }
+        .status-pending { background-color: #fff3cd; color: #856404; border: 1px solid #ffeeba; }
+        .status-approved { background-color: #d4edda; color: #155724; border: 1px solid #c3e6cb; }
+        .my-requests-section { margin-bottom: 40px; padding-bottom: 20px; border-bottom: 2px dashed #ccc; }
     </style>
 </head>
 <body>
@@ -51,12 +56,47 @@ if (!empty($_SESSION['latitude']) && !empty($_SESSION['longitude'])) {
         <h2>CommunityConnect</h2>
         <a href="addService.php" class="btn-addservice">Add Service</a>
         <a href="login.php" class="btn-logout">Logout</a>
+        <a href="participation_request.php" class="btn-addservice" style="background-color: #17a2b8;">Join an Event</a>
     </div>
 
     <div class="main-container">
         <h1>Welcome back, <?php echo htmlspecialchars($_SESSION['username']); ?>!</h1>
         <p>This is your central hub for community resources.</p>
 
+        <div class ="my-request-section">
+            <h3>My Participation Status</h3>
+            <?php
+            $currentUserID = $_SESSION['user_id'] ?? 0;
+
+            $reqSQL = "SELECT r.status, r.request_date, s.title, s.eventDate
+                        FROM participation_Requests r
+                        JOIN Community_services s ON r.service_id = s.Service_id
+                        WHERE r.user_id = :user_id
+                        ORDER BY r.request_date DESC";
+                        
+                        try{
+                            $reqStmt = $cool -> prepare($reqSQL);
+                            $reqStmt -> execute(['user_id' => $currentUserID]);
+                            $myRequest = $reqStmt -> fetchAll(PDO::FETCH_ASSOC);
+
+                            if($myRequest){
+                                foreach($myRequest as $req){
+                                    $badgeClass = ($req['status']) === 'pending' ? 'status-pending' : 'status-approved';
+                                   
+                                    echo "<div class='service-card'>";
+                                    echo "<span class='status-badge {$badgeClass}'>" . htmlspecialchars($req['status']) . "</span>";
+                                    echo "<h4 class='service-title'>" . htmlspecialchars($req['title']) . "</h4>";
+                                    echo "<p style='margin: 5px 0 0 0; font-size: 0.9em; color: #555;'><strong>Event Date:</strong> " . htmlspecialchars($req['eventDate']) . "</p>";
+                                    echo "</div>";
+                                }
+                            }else{
+                                echo "<p style='color: #666; font-style: italic;'>You haven't requested to join any events yet.</p>";
+                            }
+                        }catch(PDOException $e){
+                            echo "<p style='color: red;'>Could not load requests.</p>";
+                        }
+            ?>
+        </div>
         <?php if (!$canShowNearby): ?>
             <div class="warning-box">
                 <strong>Location Required:</strong> We couldn't find your coordinates in the system. Please update your profile with your home address so we can show you the community services closest to you!
