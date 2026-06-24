@@ -1,5 +1,9 @@
 <?php
+
 session_start();
+
+error_reporting(E_ALL);
+ini_set('display_errors', 1);
 
 if(!isset($_SESSION['username'])){
     header("Location: login.php");
@@ -13,7 +17,7 @@ $usrLng = $_SESSION['longitude'] ?? 0;
 
 $sort = isset($_GET['sort']) && $_GET['sort'] == 'desc' ? 'DESC' : 'ASC';
 
-$sql = "SELECT id, title, description, eventDate, service_address, latitude, longitude,
+$sql = "SELECT Service_id, title, description, eventDate, service_address, latitude, longitude,
         ( 6371 * acos( 
             cos( radians(:userLat1) ) * cos( radians( latitude ) ) * cos( radians( longitude ) - radians(:userLng) ) + 
             sin( radians(:userLat2) ) * sin( radians( latitude ) ) 
@@ -23,9 +27,9 @@ $sql = "SELECT id, title, description, eventDate, service_address, latitude, lon
 
 $stmt = $cool -> prepare($sql);
 $stmt -> execute([
-    'userLat1' => $usrLat,
-    'userLat2' => $usrLat,
-    'userLng' => $usrLng
+    ':userLat1' => $usrLat,
+    ':userLat2' => $usrLat,
+    ':userLng' => $usrLng
 ]);
 
 $services = $stmt -> fetchAll(PDO::FETCH_ASSOC);
@@ -75,10 +79,11 @@ $services = $stmt -> fetchAll(PDO::FETCH_ASSOC);
                 <span class="distance-badge">📍 <?= number_format($service['distance'], 2) ?> km away</span>
                 <p><strong>Date:</strong> <?= htmlspecialchars($service['eventDate']) ?></p>
                 <p><strong>Location:</strong> <?= htmlspecialchars($service['service_address']) ?></p>
+                <p>Description: </p>
                 <p><?= htmlspecialchars($service['description']) ?></p>
                 
-                <form action="process_participation.php" method="POST">
-                    <input type="hidden" name="service_id" value="<?= $service['id'] ?>">
+                <form action="participation_requestProcess.php" method="POST">
+                    <input type="hidden" name="service_id" value="<?= $service['Service_id'] ?>">
                     <button type="submit" class="join-btn">Request to Join</button>
                 </form>
             </div>
@@ -88,51 +93,5 @@ $services = $stmt -> fetchAll(PDO::FETCH_ASSOC);
             <p style="text-align: center; grid-column: 1 / -1;">No community events found at this time.</p>
         <?php endif; ?>
     </div>
-
-    <script>
-        document.querySelectorAll('.join-btn').forEach(button =>{
-            button.addEventListener('click', function(){
-                const serviceID = this.getAttribute('data-service-id');
-                const btn = this;
-                const alertBox = document.getElementById('alert-' + serviceID);
-
-
-                btn.disabled = true;
-                
-                fetch('participation_requestProcess',{
-                    method: 'POST',
-                    headers:{
-                        'content-Type' : 'application/json',
-                    },
-                    body: JSON.stringify({ serviceID: serviceID})
-                })
-                .then(Response => Response.json())
-                .then(data => {
-                    alertBox.style.display = 'block';
-                if(data.status === 'success'){
-                    alertBox.style.backgroundColor = 'Green';
-                    alertBox.style.color = '#155724';
-                    alertBox.innerText = data.message;
-                    btn.style.display = 'none';
-                }else{
-                    alertBox.style.backgroundColor = '#f8d7da';
-                        alertBox.style.color = '#721c24';
-                        alertBox.innerText = data.message;
-                        btn.disabled = false;
-                        btn.innerText = "Request to Join";
-                }
-                })
-                .catch(error => {
-                    console.error('Error' , error);
-                    alertBox.style.display = 'block';
-                    alertBox.style.backgroundColor = '#f8d7da';
-                    alertBox.style.color = '#721c24';
-                    alertBox.innerText = "Network Error. Please try again.";
-                    btn.disabled = false;
-                    btn.innerText = "Request to Join";
-                });
-            });
-        });
-    </script>
 </body>
 </html>

@@ -10,8 +10,8 @@
         $pass = $_POST['password'];
         $home_address = trim($_POST['address'] ?? '');
         $role = $_POST['role'] ?? 'admin';
-        $lat = !empty($_POST['latitude']? $_POST['latitude'] : null);
-        $lng = !empty($_POST['longitude']? $_POST['longitude'] : null);
+        $lat = !empty($_POST['latitude'])? $_POST['latitude'] : null;
+        $lng = !empty($_POST['longitude'])? $_POST['longitude'] : null;
 
         $check_st = $cool -> prepare("SELECT COUNT(*) FROM users WHERE username = ? OR email = ?");
         $check_st -> execute([$user,$email]);

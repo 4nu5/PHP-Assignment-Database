@@ -1,16 +1,15 @@
 <?php
 
 session_start();
+require 'connect.php';
 
 if(!isset($_SESSION['username'])){
     header("Location: login.php");
     exit();
 }
 
-// error_reporting(E_ALL);
-// ini_set('display_errors', 1);
-
-require 'connect.php';
+error_reporting(E_ALL);
+ini_set('display_errors', 1);
 
 if($_SERVER['REQUEST_METHOD'] == "POST"){
     $userId = $_SESSION['user_id'] ?? NULL;
