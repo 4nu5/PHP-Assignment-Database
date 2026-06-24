@@ -37,7 +37,7 @@ if (!empty($_SESSION['latitude']) && !empty($_SESSION['longitude'])) {
         .warning-box { background-color: #fff3cd; color: #856404; padding: 20px; border-radius: 8px; border-left: 5px solid #ffeeba; margin-top: 20px; }
         .warning-box a { color: #856404; font-weight: bold; text-decoration: underline; }
         
-        .services-list { margin-top: 20px; }
+        .services-list { margin-top: 20px; }    
         .service-card { border: 1px solid #e0e0e0; border-radius: 8px; padding: 15px; margin-bottom: 15px; transition: 0.3s; }
         .service-card:hover { border-color: #0056b3; box-shadow: 0 2px 8px rgba(0,86,179,0.1); }
         .service-title { margin: 0 0 10px 0; font-size: 1.2em; color: #0056b3; }
