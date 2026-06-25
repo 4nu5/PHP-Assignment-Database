@@ -25,43 +25,154 @@ if (!empty($_SESSION['latitude']) && !empty($_SESSION['longitude'])) {
     <title>Dashboard | CommunityConnect</title>
     <style>
         /* Clean, professional styling for the dashboard */
-        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; margin: 0; padding: 0; background-color: #f4f7f6; color: #333; }
-        .navbar { background-color: #0056b3; color: white; padding: 15px 30px; display: flex; justify-content: space-between; align-items: center; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
-        .navbar h2 { margin: 0; }
-        .btn-logout { background-color: #dc3545; color: white; padding: 8px 15px; text-decoration: none; border-radius: 5px; font-weight: bold; }
-        .btn-logout:hover { background-color: #c82333; }
-        .btn-addservice { background-color: #35dc6f; color: white; padding: 8px 15px; text-decoration: none; border-radius: 5px; font-weight: bold; }
-        .btn-addservice:hover { background-color: #2389c8; }
-        .main-container { max-width: 900px; margin: 40px auto; background: white; padding: 30px; border-radius: 10px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0; padding: 0;
+            background-color: #f4f7f6; 
+            color: #333; }
+        .layout {
+            display: flex;
+        }
+
+        .navbar {
+            width: 220px;
+            height: 100vh;
+            background-color: #0056b3;
+            color: white;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            position: fixed;
+            left: 0;
+            top: 0;
+        }
+
+        .navbar h2 {
+            margin-bottom: 20px;
+        }
+        .btn-logout { 
+            background-color: #dc3545; 
+            color: white; padding: 8px 15px; 
+            text-decoration: none; 
+            border-radius: 5px; 
+            font-weight: bold; 
+        }
+        .btn-logout:hover { 
+            background-color: #c82333;
+        }
+        .btn-addservice { 
+            background-color: #35dc6f; 
+            color: white; padding: 8px 15px; 
+            text-decoration: none; 
+            border-radius: 5px; 
+            font-weight: bold; 
+        }
+        .btn-addservice:hover { 
+            background-color: #2DA157; 
+        }
         
-        .warning-box { background-color: #fff3cd; color: #856404; padding: 20px; border-radius: 8px; border-left: 5px solid #ffeeba; margin-top: 20px; }
-        .warning-box a { color: #856404; font-weight: bold; text-decoration: underline; }
+        .btn-join {
+            background-color: #17a2b8;
+            color: white; padding: 8px 15px; 
+            text-decoration: none; 
+            border-radius: 5px; 
+            font-weight: bold; 
+        }
+
+        .btn-join:hover {
+            background-color: #0F8094;
+        }
+
         
-        .services-list { margin-top: 20px; }    
-        .service-card { border: 1px solid #e0e0e0; border-radius: 8px; padding: 15px; margin-bottom: 15px; transition: 0.3s; }
-        .service-card:hover { border-color: #0056b3; box-shadow: 0 2px 8px rgba(0,86,179,0.1); }
-        .service-title { margin: 0 0 10px 0; font-size: 1.2em; color: #0056b3; }
-        .service-distance { background: #e9ecef; padding: 3px 8px; border-radius: 12px; font-size: 0.8em; color: #495057; float: right; }
-        .service-address { color: #6c757d; font-size: 0.9em; margin-top: 10px; }
+        .main-container { 
+            width: 900px; 
+            margin: 40px auto; 
+            background: white; 
+            padding: 30px; 
+            border-radius: 10px; 
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05); 
+        }
         
-        .status-badge { padding: 4px 8px; border-radius: 4px; font-weight: bold; font-size: 0.85em; float: right; }
-        .status-pending { background-color: #fff3cd; color: #856404; border: 1px solid #ffeeba; }
-        .status-approved { background-color: #d4edda; color: #155724; border: 1px solid #c3e6cb; }
-        .my-requests-section { margin-bottom: 40px; padding-bottom: 20px; border-bottom: 2px dashed #ccc; }
+        .warning-box { 
+            background-color: #fff3cd; 
+            color: #856404; padding: 20px; 
+            border-radius: 8px; 
+            border-left: 5px solid #ffeeba; 
+            margin-top: 20px; 
+        }
+        .warning-box a { 
+            color: #856404; 
+            font-weight: bold; 
+            text-decoration: underline; 
+        }
+        
+        .services-list { 
+            margin-top: 20px; 
+        }    
+        .service-card { 
+            border: 1px solid #e0e0e0; 
+            border-radius: 8px; padding: 15px; 
+            margin-bottom: 15px; transition: 0.3s; 
+        }
+        .service-card:hover { 
+            border-color: #0056b3; 
+            box-shadow: 0 2px 8px rgba(0,86,179,0.1); 
+        }
+        .service-title { 
+            margin: 0 0 10px 0; 
+            font-size: 1.2em; 
+            color: #0056b3; 
+        }
+        .service-distance { 
+            background: #e9ecef; 
+            padding: 3px 8px; 
+            border-radius: 12px; 
+            font-size: 0.8em; 
+            color: #495057; 
+            float: right; 
+        }
+        .service-address { 
+            color: #6c757d; 
+            font-size: 0.9em; 
+            margin-top: 10px; 
+        }
+        .status-badge { 
+            padding: 4px 8px; 
+            border-radius: 4px; 
+            font-weight: bold; 
+            font-size: 0.85em; float: 
+            right; 
+        }
+        .status-pending { 
+            background-color: #fff3cd; 
+            color: #856404; 
+            border: 1px solid #ffeeba; 
+        }
+        .status-approved { 
+            background-color: #d4edda; 
+            color: #155724; 
+            border: 1px solid #c3e6cb; 
+        }
+        .my-requests-section { 
+            margin-bottom: 40px; 
+            padding-bottom: 20px; 
+            border-bottom: 2px dashed #ccc; 
+        }
     </style>
 </head>
 <body>
+    <div class="layout">
+        <div class="navbar">
+            <h2>CommunityConnect</h2>
+            <a href="addService.php" class="btn-addservice">Add Service</a>
+            <a href="participation_request.php" class="btn-join">Join an Event</a>
+            <a href="login.php" class="btn-logout">Logout</a>
+        </div>
 
-    <div class="navbar">
-        <h2>CommunityConnect</h2>
-        <a href="addService.php" class="btn-addservice">Add Service</a>
-        <a href="login.php" class="btn-logout">Logout</a>
-        <a href="participation_request.php" class="btn-addservice" style="background-color: #17a2b8;">Join an Event</a>
-    </div>
-
-    <div class="main-container">
-        <h1>Welcome back, <?php echo htmlspecialchars($_SESSION['username']); ?>!</h1>
-        <p>This is your central hub for community resources.</p>
+        <div class="main-container">
+            <h1>Welcome back, <?php echo htmlspecialchars($_SESSION['username']); ?>!</h1>
+            <p>This is your central hub for community resources.</p>
 
         <div class ="my-request-section">
             <h3>My Participation Status</h3>
