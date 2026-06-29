@@ -13,13 +13,52 @@ if (!isset($_SESSION['username'])) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Add Service | CommunityConnect</title>
     <style>
-        body { font-family: 'Segoe UI', Tahoma, sans-serif; background-color: #f4f7f6; padding: 20px; }
-        .container { max-width: 600px; margin: 0 auto; background: white; padding: 30px; border-radius: 10px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); }
-        input[type="text"], textarea { width: 100%; padding: 10px; margin: 8px 0 20px; border: 1px solid #ccc; border-radius: 4px; box-sizing: border-box; }
-        #map { height: 300px; width: 100%; border-radius: 8px; border: 1px solid #ccc; margin-bottom: 20px; }
-        button { background-color: #28a745; color: white; padding: 10px 20px; border: none; border-radius: 5px; cursor: pointer; font-size: 16px; width: 100%; }
-        button:hover { background-color: #218838; }
-        .back-link { display: inline-block; margin-bottom: 20px; text-decoration: none; color: #0056b3; }
+        body {
+            font-family: 'Segoe UI', Tahoma, sans-serif; 
+            background-color: #f4f7f6; padding: 20px; 
+        }
+        .container { 
+            max-width: 600px; 
+            margin: 0 auto; 
+            background: white;
+            padding: 30px; 
+            border-radius: 10px; 
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05); 
+        }
+        input[type="text"], textarea { 
+            width: 100%; 
+            padding: 10px; 
+            margin: 8px 0 20px; 
+            border: 1px solid #ccc; 
+            border-radius: 4px; 
+            box-sizing: border-box; 
+        }
+        #map { 
+            height: 300px; 
+            width: 100%; 
+            border-radius: 8px; 
+            border: 1px solid #ccc; 
+            margin-bottom: 20px; 
+        }
+        button { 
+            background-color: #28a745; 
+            color: white; 
+            padding: 10px 20px; 
+            border: none; 
+            border-radius: 5px; 
+            cursor: pointer; 
+            font-size: 16px; 
+            width: 100%; 
+        }
+        button:hover { 
+            background-color: #218838; 
+        }
+        .back-link { 
+            display: inline-block; 
+            margin-bottom: 20px; 
+            text-decoration: none; 
+            color: #0056b3; 
+        }
     </style>
     
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"> 
