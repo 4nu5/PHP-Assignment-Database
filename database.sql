@@ -44,22 +44,29 @@
 -- alter table Community_services
 -- add column latitude DECIMAL(10,8) NULL;
 -- add column longitude DECIMAL(11,8) NULL;
--- add column home_address VARCHAR(90) NULL;
-
-
--- INSERT INTO community_services (title, description, sdgTarget, eventDate, createdby, service_address, latitude, longitude) VALUES
--- ('Sunway Regional Food Bank', 'Distributing surplus food to local urban poor', 'Zero Hunger', '2026-07-15', '1', 'Jalan Universiti, Bandar Sunway', 3.067600, 101.603400),
--- ('SS15 Street Cleanup', 'Clearing blocked drains and litter around commercial zones', 'Sustainable Cities', '2026-07-20', '1', 'Jalan SS15/4, Subang Jaya', 3.076300, 101.585700),
--- ('Lakeside Youth Coding Camp', 'Free weekend programming workshops for high schoolers', 'Quality Education', '2026-08-05', '1', 'No. 1 Jalan Taylors, Subang Jaya', 3.062600, 101.616800),
--- ('Lagoon Selatan Tree Planting', 'Greening the pedestrian walkways and local parks', 'Climate Action', '2026-08-10', '1', 'Jalan Lagoon Selatan, Bandar Sunway', 3.064500, 101.600600),
--- ('USJ 1 Soup Kitchen', 'Serving hot meals to vulnerable communities', 'Zero Hunger', '2026-08-15', '1', 'Persiaran Subang Permai, USJ 1', 3.053800, 101.593200);
+-- add column service_address VARCHAR(90) NULL;
 
 
 
 
+-- CREATE TABLE password_resets (
+--     id INT AUTO_INCREMENT PRIMARY KEY,
+--     email VARCHAR(255) NOT NULL,
+--     token VARCHAR(255) NOT NULL,
+--     expires_at DATETIME NOT NULL,
+--     created_at DATETIME DEFAULT CURRENT_TIMESTAMP
+-- );
 
--- UPDATE users 
--- SET latitude = 3.075000, 
---     longitude = 101.593000, 
---     home_address = 'SS15 Residential Area, Subang Jaya' 
--- WHERE username = 'collinllaxman';
+
+-- ALTER TABLE users 
+-- ADD COLUMN is_active TINYINT(1) DEFAULT 1;
+
+
+-- CREATE TABLE notifications (
+--     id INT AUTO_INCREMENT PRIMARY KEY,
+--     user_id INT NOT NULL,
+--     message TEXT NOT NULL,
+--     is_read TINYINT(1) DEFAULT 0,
+--     created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+--     FOREIGN KEY (user_id) REFERENCES users(user_id) ON DELETE CASCADE
+-- );

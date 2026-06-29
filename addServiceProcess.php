@@ -2,8 +2,8 @@
 
 session_start();
 
-if(!isset($_SESSION['username'])){
-    header("Location: login.php");
+if(!isset($_SESSION['username']) || $_SESSION['role'] !== 'admin'){
+    header("Location: dashboardtest.php");
     exit();
 }
 error_reporting(E_ALL);

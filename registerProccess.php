@@ -13,6 +13,10 @@
         $lat = !empty($_POST['latitude'])? $_POST['latitude'] : null;
         $lng = !empty($_POST['longitude'])? $_POST['longitude'] : null;
 
+        if(!filter_var($email, FILTER_VALIDATE_EMAIL)){
+            die("<h3 style='color: red;'>Error: Invalid Email Format.</h3> <a href='register.php'>Try Again</a>");
+        }
+
         $check_st = $cool -> prepare("SELECT COUNT(*) FROM users WHERE username = ? OR email = ?");
         $check_st -> execute([$user,$email]);
         $existsUE = $check_st -> fetchColumn();
