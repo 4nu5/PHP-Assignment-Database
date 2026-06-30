@@ -16,10 +16,12 @@
     <div class="container">
         <h2>Reset Password</h2>
         <p>Enter your registered email address to receive a password reset link.</p>
+        
         <form action="forgot_password_process.php" method="POST">
             <input type="email" name="email" required placeholder="Enter your email">
             <button type="submit">Send Reset Link</button>
         </form>
+        
         <br>
         <a href="login.php" style="color: #0056b3; text-decoration: none;">← Back to Login</a>
     </div>

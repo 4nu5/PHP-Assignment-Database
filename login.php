@@ -32,7 +32,12 @@
         </div>
        
         <button type="submit">LOGIN</button><br><br>
-         <a href="register.php">Click to Register</a>
+        <div style="text-align: center; font-size: 14px;">
+            <a href="forgot_password.php" style="color: #555; text-decoration: none; margin-right: 15px;">Forgot Password?</a>
+            <span style="color: #ccc;">|</span>
+            <a href="register.php" style="color: #007bff; text-decoration: none; margin-left: 15px;">Click to Register</a>
+        </div>
+    </form>
     </form>
 </div>
 
