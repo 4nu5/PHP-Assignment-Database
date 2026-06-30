@@ -16,22 +16,32 @@ $usrLat = $_SESSION['latitude'] ?? 0;
 $usrLng = $_SESSION['longitude'] ?? 0;
 
 $sort = isset($_GET['sort']) && $_GET['sort'] == 'desc' ? 'DESC' : 'ASC';
+$search = isset($_GET['search']) ? trim($_GET['search']) : '';
 
 $sql = "SELECT Service_id, title, description, eventDate, service_address, latitude, longitude,
         ( 6371 * acos( 
             cos( radians(:userLat1) ) * cos( radians( latitude ) ) * cos( radians( longitude ) - radians(:userLng) ) + 
             sin( radians(:userLat2) ) * sin( radians( latitude ) ) 
         ) ) AS distance 
-        FROM Community_services 
-        ORDER BY distance $sort";
+        FROM Community_services";
+
+if (!empty($search)) {
+    $sql .= " WHERE title LIKE :search";
+}
+$sql .= " ORDER BY distance " . $sort;
+        
 
 $stmt = $cool -> prepare($sql);
-$stmt -> execute([
+$params = [
     ':userLat1' => $usrLat,
     ':userLat2' => $usrLat,
     ':userLng' => $usrLng
-]);
+];
 
+if(!empty($search)){
+    $params[':search'] = '%' . $search . '%';
+}
+$stmt -> execute($params);
 $services = $stmt -> fetchAll(PDO::FETCH_ASSOC);
 ?>
 
@@ -64,11 +74,16 @@ $services = $stmt -> fetchAll(PDO::FETCH_ASSOC);
             <h2>Local Service Projects</h2>
         </div>
         
-        <form id="sortForm" method="GET">
+      <form id="sortForm" method="GET" action="participation_request.php" style="display: flex; gap: 10px; align-items: center;">
+            <input type="text" name="search" placeholder="Search by title..." value="<?= htmlspecialchars($search) ?>" style="padding: 10px; border-radius: 5px; border: 1px solid #ccc; font-size: 16px;">
             <select name="sort" class="sort-select" onchange="document.getElementById('sortForm').submit();">
                 <option value="asc" <?= $sort === 'ASC' ? 'selected' : '' ?>>Nearest to Furthest</option>
                 <option value="desc" <?= $sort === 'DESC' ? 'selected' : '' ?>>Furthest to Nearest</option>
             </select>
+            <button type="submit" style="padding: 10px 15px; background: #0056b3; color: white; border: none; border-radius: 5px; cursor: pointer; font-size: 16px;">Search</button>
+            <?php if (!empty($search)): ?>
+                <a href="participation_request.php" style="padding: 10px; background: #6c757d; color: white; text-decoration: none; border-radius: 5px; font-size: 16px;">Clear</a>
+            <?php endif; ?>
         </form>
     </div>
 

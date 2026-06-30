@@ -46,9 +46,9 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
         'lng' => $lng
     ]);
         echo "<div style='font-family: sans-serif; text-align: center; margin-top: 50px;'>";
-        echo "<h2 style='color: green;'>✅ Service Successfully Created!</h2>";
+        echo "<h2 style='color: green;'> Service Successfully Created!</h2>";
         echo "<p>Your event <strong>" . htmlspecialchars($title) . "</strong> is now live on the community board.</p>";
-        echo "<a href='dashboard.php' style='display: inline-block; padding: 10px 20px; background: #0056b3; color: white; text-decoration: none; border-radius: 5px;'>Return to Dashboard</a>";
+        echo "<a href='dashboardtest.php' style='display: inline-block; padding: 10px 20px; background: #0056b3; color: white; text-decoration: none; border-radius: 5px;'>Return to Dashboard</a>";
         echo "</div>";
     }catch(PDOException $e){
         die("<h3 style='color: red;'>Database Error: </h3>" . $e->getMessage());

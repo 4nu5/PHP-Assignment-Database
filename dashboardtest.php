@@ -67,6 +67,37 @@ if (!empty($_SESSION['latitude']) && !empty($_SESSION['longitude'])) {
         <h1>Welcome back, <?php echo htmlspecialchars($_SESSION['username']); ?>!</h1>
         <p>This is your central hub for community resources.</p>
 
+        <?php
+            $currentUserID = $_SESSION['user_id'] ?? 0;
+
+            try{
+                $notifSql = "SELECT id, message, created_at FROM notification WHERE user_id = :uid AND is_read = 0 ORDER BY created_at DESC";
+                $notifStmt = $cool -> prepare($notifSql);
+                $notifStmt -> execute([
+                    'uid' => $currentUserID
+                ]);
+                $notifications = $notifStmt -> fetchAll(PDO::FETCH_ASSOC);
+
+                if($notifications){
+                    echo "<div style='background-color: #d1ecf1; color: #0c5460; padding: 15px; border-radius: 8px; border-left: 5px solid #17a2b8; margin-bottom: 25px;'>";
+                echo "<h3 style='margin-top: 0;'> New Notifications</h3>";
+                echo "<ul style='margin-bottom: 0;'>";
+
+                foreach($notifications as $note){
+                    echo "<li style='margin-bottom: 8px;'>";
+                    echo "<strong>" . htmlspecialchars($note['message']) . "</strong> ";
+                    echo "<span style='font-size: 0.85em; color: #5bc0de;'>(" . date("M j, Y g:i A", strtotime($note['created_at'])) . ")</span>";
+                    echo " <a href='dashboardtest.php?id=" . $note['id'] . "' style='color: #0c5460; font-size: 0.85em; text-decoration: underline; margin-left: 10px;'>[Dismiss]</a>";
+                    echo "</li>";
+                }
+                echo"</ul>";
+                echo"</div>";
+                }
+            }catch(PDOException $e){
+                echo "";
+            }
+        ?>
+
         <div class ="my-request-section">
             <h3>My Participation Status</h3>
             <?php

@@ -21,16 +21,6 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
                 $_SESSION['latitude'] = $user['latitude'];
                 $_SESSION['longitude'] = $user['longitude'];
 
-                
-    echo "<h3>Debug Session Roles:</h3>";
-    echo "Raw DB Role Entry: Data Type Summary below:<br><pre>";
-    print_r($user);
-    echo "</pre>";
-    echo "Assigned Session Role: <strong>" . $_SESSION['role'] . "</strong><br>";
-    echo "<a href='dashboardtest.php'>Proceed to Dashboard</a>";
-    exit();
-    
-    
                 echo "login successfull";
                 header("Location: dashboardtest.php");
                 exit();
