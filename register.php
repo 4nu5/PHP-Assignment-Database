@@ -23,8 +23,8 @@
         <label for="password">Password:</label><br>
         <input type="password" id="password" name="password" required minlength="6"><br><br>
         <select name="role" id="role">
-            <option value="User">User</option>
-            <option value="Admin">Admin</option>
+            <option value="user">User</option>
+            <option value="admin">Admin</option>
         </select><br><br>
         <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"> 
         <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>

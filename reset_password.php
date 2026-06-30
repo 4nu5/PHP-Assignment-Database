@@ -83,16 +83,22 @@ if($_SERVER["REQUEST_METHOD"] == "POST" && $isTokenValid){
             <div class="alert"><?php echo $message; ?></div>
         <?php endif; ?>
 
+        <?php if (!$isTokenValid): ?>
+            <div style="text-align: center; margin-top: 20px;">
+                <a href="login.php" style="display: inline-block; width: 100%; padding: 10px; background-color: #0056b3; border: none; border-radius: 4px; color: white; text-decoration: none; font-size: 16px; font-weight: bold; box-sizing: border-box;">← Back to Login</a>
+            </div>
+        <?php endif; ?>
+
         <?php if ($isTokenValid): ?>
             <p>Please enter your new secure password below.</p>
             <form action="reset_password.php" method="POST">
                 <input type="hidden" name="token" value="<?php echo htmlspecialchars($token); ?>">
                 
                 <label for="password">New Password:</label>
-                <input type="password" id="password" name="password" required minlength="6">
+                <input type="password" id="password" name="password" required minlength="8">
                 
                 <label for="confirm_password">Confirm New Password:</label>
-                <input type="password" id="confirm_password" name="confirm_password" required minlength="6">
+                <input type="password" id="confirm_password" name="confirm_password" required minlength="8">
                 
                 <button type="submit">Update Password</button>
             </form>

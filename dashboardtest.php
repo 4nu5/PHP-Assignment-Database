@@ -54,6 +54,10 @@ if (!empty($_SESSION['latitude']) && !empty($_SESSION['longitude'])) {
 
     <div class="navbar">
         <h2>CommunityConnect</h2>
+
+        <?php if (isset($_SESSION['role']) && strtolower($_SESSION['role']) === 'admin'): ?>
+            <a href="adminDashboard.php" class="btn-addservice" style="background-color: #ff9800;">Admin Panel</a>
+        <?php endif; ?>
         <a href="addService.php" class="btn-addservice">Add Service</a>
         <a href="login.php" class="btn-logout">Logout</a>
         <a href="participation_request.php" class="btn-addservice" style="background-color: #17a2b8;">Join an Event</a>
